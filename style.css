@@ -1,0 +1,308 @@
+/* 基础样式 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+/* 表单样式 */
+#calligraphy-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+}
+
+select, input[type="range"], input[type="color"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+input[type="range"] {
+    padding: 8px 0;
+    height: 40px;
+    background: transparent;
+    appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #3498db;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #3498db;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    background: #ddd;
+    border-radius: 2px;
+}
+
+input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 4px;
+    background: #ddd;
+    border-radius: 2px;
+}
+
+input[type="color"] {
+    height: 40px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+/* 为滑块值显示添加样式 */
+#font-size-value, #font-opacity-value {
+    font-weight: normal;
+    color: #3498db;
+    margin-left: 5px;
+}
+
+#generate-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 20px auto 0;
+}
+
+#generate-btn:hover {
+    background-color: #2980b9;
+}
+
+/* 纸张大小类 */
+.paper {
+    background-color: white;
+    margin: 20px auto;
+    padding: 20px; /* 增加内边距，留适当边距 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    page-break-after: always;
+}
+
+.A4 {
+    width: 210mm;
+    height: 297mm;
+}
+
+.A3 {
+    width: 297mm;
+    height: 420mm;
+}
+
+.B5 {
+    width: 176mm;
+    height: 250mm;
+}
+
+/* 田字格容器 */
+.calligraphy-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2mm;
+    justify-content: center; /* 水平居中 */
+    align-content: flex-start; /* 垂直居上 */
+}
+
+/* 田字格样式 */
+.grid {
+    position: relative;
+    background-color: white;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    overflow: hidden;
+}
+
+/* 使用CSS绘制田字格 */
+.grid::before,
+.grid::after {
+    content: '';
+    position: absolute;
+    background-color: #000;
+    opacity: 0.3;
+}
+
+/* 水平线 */
+.grid::before {
+    width: 100%;
+    height: 1px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+/* 垂直线 */
+.grid::after {
+    width: 1px;
+    height: 100%;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+}
+
+/* 四分之一辅助线 */
+.grid {
+    background: linear-gradient(to right, 
+        transparent calc(25% - 0.5px), 
+        rgba(0, 0, 0, 0.2) calc(25% - 0.5px), 
+        rgba(0, 0, 0, 0.2) calc(25% + 0.5px), 
+        transparent calc(25% + 0.5px), 
+        transparent calc(75% - 0.5px), 
+        rgba(0, 0, 0, 0.2) calc(75% - 0.5px), 
+        rgba(0, 0, 0, 0.2) calc(75% + 0.5px), 
+        transparent calc(75% + 0.5px)),
+        linear-gradient(to bottom, 
+        transparent calc(25% - 0.5px), 
+        rgba(0, 0, 0, 0.2) calc(25% - 0.5px), 
+        rgba(0, 0, 0, 0.2) calc(25% + 0.5px), 
+        transparent calc(25% + 0.5px), 
+        transparent calc(75% - 0.5px), 
+        rgba(0, 0, 0, 0.2) calc(75% - 0.5px), 
+        rgba(0, 0, 0, 0.2) calc(75% + 0.5px), 
+        transparent calc(75% + 0.5px));
+}
+
+/* 字符样式 */
+.grid span {
+    position: relative;
+    z-index: 1;
+    user-select: none;
+}
+
+/* 打印样式 */
+@media print {
+    body {
+        background-color: white;
+        margin: 0;
+    }
+
+    .container {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    #calligraphy-form {
+        display: none;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    .paper {
+        box-shadow: none;
+        margin: 0;
+        padding: 15mm; /* 增加打印时的内边距，留适当边距 */
+        width: 100%;
+        height: 100%;
+    }
+
+    .calligraphy-page {
+        padding: 0;
+        justify-content: center;
+        align-content: flex-start;
+        gap: 2mm;
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .paper {
+        width: 100%;
+        height: auto;
+        overflow: auto;
+    }
+
+    .A4, .A3, .B5 {
+        width: 100%;
+        height: auto;
+    }
+}

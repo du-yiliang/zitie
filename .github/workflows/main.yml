@@ -1,0 +1,48 @@
+# 工作流名称：CI/CD Pipeline
+# 用于自动化构建、测试和部署项目
+name: CI/CD Pipeline
+
+# 触发条件：当代码推送到main分支或创建针对main分支的PR时执行
+on:
+  push:
+    branches: [ main ]  # 监听main分支的推送事件
+  pull_request:
+    branches: [ main ]  # 监听针对main分支的PR事件
+
+# 定义工作流的作业
+jobs:
+  # 作业名称：build
+  build:
+    # 运行环境：使用最新版本的Ubuntu操作系统
+    runs-on: ubuntu-latest
+    
+    # 作业步骤
+    steps:
+    # 步骤1：检出代码仓库
+    - uses: actions/checkout@v4  # 使用GitHub官方的checkout动作，获取最新代码
+    
+    # 步骤2：设置Node.js环境
+    - name: Setup Node.js  # 步骤名称
+      uses: actions/setup-node@v4  # 使用GitHub官方的setup-node动作
+      with:
+        node-version: '18'  # 指定Node.js版本为18
+        cache: 'npm'  # 启用npm依赖缓存，加快构建速度
+    
+    # 步骤3：安装项目依赖
+    - name: Install dependencies  # 步骤名称
+      run: npm ci  # 使用npm ci命令安装依赖，确保依赖版本一致性
+    
+    # 步骤4：运行代码检查
+    - name: Lint code  # 步骤名称
+      run: npm run lint  # 运行package.json中定义的lint脚本，检查代码质量
+    
+    # 步骤5：构建项目
+    - name: Build project  # 步骤名称
+      run: npm run build  # 运行package.json中定义的build脚本，构建生产版本
+    
+    # 步骤6：上传构建产物
+    - name: Upload build artifacts  # 步骤名称
+      uses: actions/upload-artifact@v4  # 使用GitHub官方的upload-artifact动作
+      with:
+        name: build-artifacts  # artifact名称，用于标识构建产物
+        path: dist/  # 构建产物的路径，vite构建默认输出到dist目录
